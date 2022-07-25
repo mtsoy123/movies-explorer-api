@@ -1,29 +1,29 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-const movie = new mongoose.Schema({
+const movieSchema = new mongoose.Schema({
   country: {
-    require: true,
+    required: true,
     type: String,
   },
   director: {
-    require: true,
+    required: true,
     type: String,
   },
   duration: {
-    require: true,
+    required: true,
     type: Number,
   },
   year: {
-    require: true,
+    required: true,
     type: Number,
   },
   description: {
-    require: true,
+    required: true,
     type: String,
   },
   image: {
-    require: true,
+    required: true,
     type: String,
     validate: {
       validator(url) {
@@ -32,7 +32,7 @@ const movie = new mongoose.Schema({
     },
   },
   trailerLink: {
-    require: true,
+    required: true,
     type: String,
     validate: {
       validator(url) {
@@ -41,7 +41,7 @@ const movie = new mongoose.Schema({
     },
   },
   thumbnail: {
-    require: true,
+    required: true,
     type: String,
     validate: {
       validator(url) {
@@ -55,15 +55,17 @@ const movie = new mongoose.Schema({
     required: true,
   },
   movieId: {
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
-  // ?? id фильма, который содержится в ответе сервиса MoviesExplorer.
   },
   nameRU: {
-    require: true,
+    required: true,
     type: String,
   },
   nameEN: {
-    require: true,
+    required: true,
     type: String,
   },
 });
+
+module.exports = mongoose.model('movie', movieSchema);
