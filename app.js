@@ -9,7 +9,7 @@ const router = require('./routes/index');
 const cors = require('./middlewares/cors');
 require('dotenv').config();
 
-const { PORT = 3000, NODE_ENV, DB_ADRESS } = process.env;
+const { PORT = 3000, NODE_ENV, DB_ADDRESS } = process.env;
 
 const app = express();
 mongoose.connect(NODE_ENV === 'production' ? DB_ADDRESS : 'mongodb://localhost:27017/moviesdb');
