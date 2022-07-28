@@ -1,16 +1,19 @@
 const router = require('express').Router();
 const userRouter = require('./user');
 const movieRouter = require('./movie');
-const auth = require('../middlewares/isAuthorised');
-const { signup, signin } = require('../controlleres/user');
+const isAuthorised = require('../middlewares/isAuthorised');
+const { signup, login, signout } = require('../controlleres/user');
 const NotFoundErr = require('../utils/errors/NotFoundErr');
+const { validateUserAuth, validateUserSignin } = require('../middlewares/validation');
 
-router.post('/signup', signup);
-router.post('/signin', signin);
+router.post('/signup', validateUserAuth, signup);
+router.post('/signin', validateUserSignin, login);
 
-router.use(auth);
-router.use('/user', userRouter);
-router.use('/movie', movieRouter);
+router.use(isAuthorised);
+
+router.get('/signout', signout);
+router.use('/users', userRouter);
+router.use('/movies', movieRouter);
 
 router.use((req, res, next) => {
   next(new NotFoundErr('Страница не найдена'));

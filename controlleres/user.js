@@ -6,11 +6,13 @@ const ConflictErr = require('../utils/errors/ConflictErr');
 const { DUPLICATE_ERROR, CREATED } = require('../utils/errors/statusCodes');
 const NotFoundErr = require('../utils/errors/NotFoundErr');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 const opts = { runValidators: true, new: true };
 
 module.exports.getUserInfo = (req, res, next) => {
   User.findById(req.user._id)
-    .then((user) => res.send(user))
+    .then((user) => res.send({ email: user.email, name: user.name }))
     .catch(next);
 };
 
@@ -44,8 +46,7 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        'my-secret-key',
-        // NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
       );
       res.cookie('jwt', token, {
@@ -63,9 +64,9 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.signup = (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password, name } = req.body;
   bcrypt.hash(password, 10)
-    .then((hash) => User.create({ email, password: hash }))
+    .then((hash) => User.create({ email, password: hash, name }))
     .then((user) => res.status(CREATED).send(user))
     .catch((err) => {
       if (err.code === DUPLICATE_ERROR) {

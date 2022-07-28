@@ -1,47 +1,17 @@
 const router = require('express').Router();
-const { celebrate } = require('celebrate');
-const Joi = require('joi');
 const { getMovies, createMovie, deleteMovie } = require('../controlleres/movie');
+const { validateMovie } = require('../middlewares/validation');
 
 router.get('/', getMovies);
 
 router.post(
   '/',
-  celebrate({
-    body: Joi.object().keys({
-      country: Joi.string().required(),
-      director: Joi.string().required(),
-      duration: Joi.number().required(),
-      year: Joi.number().required(),
-      description: Joi.string().required(),
-      image: Joi.string().required().regex(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~://?#[\]@!$&'()*+,;=.]+/im),
-      thumbnail: Joi.string().required().regex(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~://?#[\]@!$&'()*+,;=.]+/im),
-      trailerLink: Joi.string().required().regex(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~://?#[\]@!$&'()*+,;=.]+/im),
-      nameRU: Joi.string().required(),
-      nameEN: Joi.string().required(),
-      owner: Joi.string().required(),
-    }),
-  }),
+  validateMovie,
   createMovie,
 );
 
 router.delete(
-  '/_id',
-  celebrate({
-    body: Joi.object().keys({
-      country: Joi.string().required(),
-      director: Joi.string().required(),
-      duration: Joi.number().required(),
-      year: Joi.number().required(),
-      description: Joi.string().required(),
-      image: Joi.string().required().regex(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~://?#[\]@!$&'()*+,;=.]+/im),
-      thumbnail: Joi.string().required().regex(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~://?#[\]@!$&'()*+,;=.]+/im),
-      trailerLink: Joi.string().required().regex(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~://?#[\]@!$&'()*+,;=.]+/im),
-      nameRU: Joi.string().required(),
-      nameEN: Joi.string().required(),
-      owner: Joi.string().required(),
-    }),
-  }),
+  '/:id',
   deleteMovie,
 );
 

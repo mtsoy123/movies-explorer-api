@@ -20,10 +20,15 @@ const userSchema = new mongoose.Schema({
     select: false,
     required: true,
   },
+  name: {
+    type: String,
+    required: true,
+    minLength: 2,
+    maxLength: 30,
+  },
 });
 
-// eslint-disable-next-line func-names
-userSchema.statics.findUserByCred = function (email, password) {
+userSchema.statics.findUserByCred = function findUserByCred(email, password) {
   if (!email || !password) {
     throw new UnauthorizedErr('Неверная почта или пароль');
   }
