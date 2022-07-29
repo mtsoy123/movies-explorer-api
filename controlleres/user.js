@@ -18,10 +18,14 @@ module.exports.getUserInfo = (req, res, next) => {
 
 module.exports.updateUserInfo = (req, res, next) => {
   const { email, name } = req.body;
-  User.findOneAndUpdate(req.user._id, { email, name }, opts)
+  User.findByIdAndUpdate(req.user._id, { email, name }, opts)
     .then((user) => {
       if (!user) {
         next(new NotFoundErr('Пользователь по указанному _id не найден.'));
+        return;
+      }
+      if (!user.email.equals(email)) {
+        next(new ConflictErr('Указаный email принадлежит другому пользователю'));
         return;
       }
 
@@ -67,7 +71,7 @@ module.exports.signup = (req, res, next) => {
   const { email, password, name } = req.body;
   bcrypt.hash(password, 10)
     .then((hash) => User.create({ email, password: hash, name }))
-    .then((user) => res.status(CREATED).send(user))
+    .then((user) => res.status(CREATED).send({ email: user.email, name: user.name }))
     .catch((err) => {
       if (err.code === DUPLICATE_ERROR) {
         next(new ConflictErr('Пользователь с таким email уже зарегистрирован'));
@@ -81,6 +85,6 @@ module.exports.signup = (req, res, next) => {
     });
 };
 
-module.exports.signout = (req, res, next) => {
+module.exports.signout = (req, res) => {
   res.clearCookie('jwt').send({ message: 'Выход' });
 };

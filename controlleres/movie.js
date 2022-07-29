@@ -7,7 +7,6 @@ const ForbiddenErr = require('../utils/errors/ForbiddenErr');
 module.exports.getMovies = (req, res, next) => {
   const userId = req.user._id;
   Movie.find({ owner: userId })
-    .orFail(() => next(new NotFoundErr('Фильмы не найдены')))
     .then((movies) => res.send(movies))
     .catch(next);
 };
@@ -63,9 +62,9 @@ module.exports.deleteMovie = (req, res, next) => {
       // movie.owner is array?
       if (!movie.owner.equals(req.user._id)) {
         next(new ForbiddenErr('Вы пытаетесь удалить чужой фильм'));
-        return;
+        return {};
       }
-      movie.remove()
+      return movie.remove()
         .then(() => res.send(movie));
     })
     .catch((err) => {
