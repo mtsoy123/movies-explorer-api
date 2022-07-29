@@ -24,10 +24,6 @@ module.exports.updateUserInfo = (req, res, next) => {
         next(new NotFoundErr('Пользователь по указанному _id не найден.'));
         return;
       }
-      if (!user.email.equals(email)) {
-        next(new ConflictErr('Указаный email принадлежит другому пользователю'));
-        return;
-      }
 
       res.send({
         name: user.name,
@@ -39,6 +35,12 @@ module.exports.updateUserInfo = (req, res, next) => {
         next(new BadRequestErr('Некорректный формат запроса'));
         return;
       }
+
+      if (err.code === DUPLICATE_ERROR) {
+        next(new ConflictErr('Указаный email принадлежит другому пользователю'));
+        return;
+      }
+
       next(err);
     });
 };
