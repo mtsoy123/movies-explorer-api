@@ -26,7 +26,7 @@ app.use(router);
 app.use(errorLogger);
 app.use(errors());
 
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
 
   res
@@ -36,6 +36,7 @@ app.use((err, req, res) => {
         ? 'Ошибка сервера'
         : message,
     });
+  next();
 });
 
 app.listen(PORT, 'localhost');
