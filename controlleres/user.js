@@ -57,7 +57,8 @@ module.exports.login = (req, res, next) => {
       );
       res.cookie('jwt', token, {
         httpOnly: true,
-        sameSite: 'Strict',
+        sameSite: 'None',
+        secure: true,
       });
       res.send({ token });
     })
