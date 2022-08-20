@@ -1,8 +1,10 @@
 const allowedCors = [
   'localhost:3000',
   'http://localhost:3000',
-  'http://mtsoy.movieservice.nomoredomains.sbs',
-  'https://mtsoy.movieservice.nomoredomains.sbs',
+  // 'http://mtsoy.movieservice.nomoredomains.sbs',
+  'http://mtsoy123.nomoredomains.xyz',
+  // 'https://mtsoy.movieservice.nomoredomains.sbs',
+  'https://mtsoy123.nomoredomains.xyz',
 ];
 
 module.exports = (req, res, next) => {
