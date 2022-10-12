@@ -1,4 +1,4 @@
-# Дипломный проект Movies Explorer
+# Diploma project Movies Explorer
 
 ## Backend
 https://api.mtsoy123.nomoredomains.xyz
@@ -7,28 +7,26 @@ https://api.mtsoy123.nomoredomains.xyz
 https://mtsoy123.nomoredomains.xyz
 https://github.com/mtsoy123/movies-explorer-frontend
 
-## Запуск приложения
+## Getting Started
 `npm run start`
 
-## О проекте
-Дипломный проект факультета веб-рабработки Яндекс.Практикума. Цель проекта — создать портфолио, показывающее основные навыки и технологии.
+## About Project
+Diploma project of the Yandex.Practicum Web Development Faculty. The goal of the project is to create a portfolio showing main skills and technologies used.
 
-Проект включал 5 этапов: составление плана, работа над бекендом, добавление функциональности, финальные доработки. На выполнение проекта ушло 5 недель
+The project included 5 stages: drawing up a plan, working on the backend, adding functionality, final improvements. The project took 5 weeks to complete
 
-Бекенд разработан на node.js, express.js, MongoDb. В приложении реализована обработка запросов и ошибок. Роуты защищены авторизацией, пароль хешируется. Запросы валидируются до передачи в контроллеры и в схеме базы данных
+The backend is developed with node.js, express.js, MongoDb. The application implements request and error handling. The routers are protected by authorization, the password is hashed. Requests are validated before being passed to controllers and in the database schema
 
-В процессе использован Git для контроля версий.
+In the process, Git is used for version control.
 
-## Функционал
-* Регистрация нового пользователя
-* Авторизация существующего пользователя
-* Редактирование профиля: имя, описание, аватар
-* Поиск по фильмам BeatFilm
-* Фильтрация и валидация введенных данных
-* Лайк/дизлайк фильма
-* Обработка ошибок на стороне бекенда
+## Features
+* Registration of a new user
+* Authorization of an existing user
+* Profile editing: name, description, avatar
+* Like/dislike the movie
+* Error handling on the backend side
 
-## Технологии
+## Tech Stack
 * JavaScript
 * Node.js
 * Express.js
